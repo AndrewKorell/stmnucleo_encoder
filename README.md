@@ -9,8 +9,9 @@ Honestly, it's not doing much aside from providing a nice thread to run code in.
 
 # Patterns 
 
-Clock-Wise:      AB -> 00  01  11  10
-Ant-Clock Wise:  AB -> 00  10  11  01 
+  Clock-Wise:      AB -> 00  01  11  10
+
+  Ant-Clock Wise:  AB -> 00  10  11  01 
 
 # the failed attempt 
 
