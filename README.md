@@ -34,7 +34,11 @@ Tried to do this manually with Rising/Falling triggers on A and B. I found I was
 
 # Encoder Option on Timer Input 
 
+## TIM2 Settings
+![image](https://github.com/user-attachments/assets/8e9af533-268f-41f8-a2b5-930f4519b74e)
 
+ENC_A is mapped to PA0 (TIM1) with pull-down enabled 
+ENC_B is mapped to PA1 (TIM2) with pull-down enabled 
 
 # Encoder wiring 
 
