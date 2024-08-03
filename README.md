@@ -1,6 +1,21 @@
 # stmnucleo_encoder
 Encoder implemented on an STM32 Nucleo board 411RE or 446ZE
 
+One of the goals is to accuractely keep counts over several revolutions. I configured the TIM2 Encoder option to a count period of 2000 for the encoder. This means the TIM2-CNT register will count 0-2000 for a complete rotation and then return to 0 when moving in the clockwise direction. It will count 2000 to 0 when moving in anti-clockwise. 
+
+A quick way of dealing with the zero crossing is to assume that I am not going to see a change of 1500 counts in 10ms. That would be 150,000 in a second or 75 rotations in 1 second. Much slower than the 3000 rpm the motor is rated for. I would increase the TIM2 count period  and the sampling rate for higher speeds.
+
+# encoder index 
+
+For future implementation.
+I will try to use this to reset aligne the zero crossing with the index.
+
+# serial output 
+
+![image](https://github.com/user-attachments/assets/8fc3ecfb-f9ba-4ec1-b0bb-b7cc6a14fb65)
+
+![image](https://github.com/user-attachments/assets/5af03fa4-ee3c-44c4-8b53-91da02621608)
+
 # FreeRTOS
 
 I am using ST middleware implementation of FreeRTOS 10.3.1  
