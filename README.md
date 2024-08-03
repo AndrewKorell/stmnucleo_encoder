@@ -1,4 +1,5 @@
-# stmnucleo_encoder
+# Interfacing with an Encoder on Nucleo 411RE 
+
 Encoder implemented on an STM32 Nucleo board 411RE or 446ZE
 
 One of the goals is to accuractely keep counts over several revolutions. I configured the TIM2 Encoder option to a count period of 2000 for the encoder. This means the TIM2-CNT register will count 0-2000 for a complete rotation and then return to 0 when moving in the clockwise direction. It will count 2000 to 0 when moving in anti-clockwise. 
