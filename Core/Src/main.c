@@ -54,8 +54,10 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+uint32_t enc_index_offset;
 int32_t enc_counts;
-uint8_t MSG[60];
+uint8_t MSG[100];
+
 
 /* USER CODE END PV */
 
@@ -238,7 +240,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 2000;
+  htim2.Init.Period = 1999;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
@@ -373,7 +375,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : ENC_Z_Pin */
   GPIO_InitStruct.Pin = ENC_Z_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(ENC_Z_GPIO_Port, &GPIO_InitStruct);
 
@@ -425,7 +427,7 @@ void StartDefaultTask(void *argument)
 
 	  if(p_cnt++ > 10)
 	  {
-	      sprintf((char *) MSG, "Encoder Raw Counts = %lu, Encoder Tracking = %ld\r\n", (long) raw_cnt, (long) full_cnt);
+	      sprintf((char *) MSG, "Encoder Raw Counts = %lu, Index Offset = %lu, Encoder Tracking = %ld\r\n", (long) raw_cnt, (long) enc_index_offset, (long) full_cnt);
 	      HAL_UART_Transmit(&huart2, MSG, sizeof(MSG), 100);
 	      p_cnt = 0;
 	  }
