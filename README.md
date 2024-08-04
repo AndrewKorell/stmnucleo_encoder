@@ -1,20 +1,27 @@
-# stmnucleo_encoder
+# Interfacing with an Encoder on Nucleo 411RE 
+
 Encoder implemented on an STM32 Nucleo board 411RE or 446ZE
 
-One of the goals is to accuractely keep counts over several revolutions. I configured the TIM2 Encoder option to a count period of 2000 for the encoder. This means the TIM2-CNT register will count 0-2000 for a complete rotation and then return to 0 when moving in the clockwise direction. It will count 2000 to 0 when moving in anti-clockwise. 
+The coder is 500 counts. At Quadrature it will be 2000 counts. That means entering 1999 into the TIM2:Counter Period register. 
+
+I will capture the offset on the falling endge of the ENC Z input which I have hooked to an ExtI interrupt. We should see this number twice in a rotation in 1000 count increments. These numbers should be consistent. We should also be able to accuration keep track over several rotations in both the clockwise and anti-clockwise directions.  
+
+# Track several rotations
+
+The TIM2 Counter will return, inclusive 0 up to 1999 or, inclusive 1999 downto 0 (2000 counts total).
 
 A quick way of dealing with the zero crossing is to assume that I am not going to see a change of 1500 counts in 10ms. That would be 150,000 in a second or 75 rotations in 1 second. Much slower than the 3000 rpm the motor is rated for. I would increase the TIM2 count period  and the sampling rate for higher speeds.
 
-# encoder index 
+# Serial output 
 
-For future implementation.
-I will try to use this to reset aligne the zero crossing with the index.
+## Clockwise Rotation 
 
-# serial output 
+![image](https://github.com/user-attachments/assets/e9839733-3261-4e3c-821a-4c5240cb2db6)
 
-![image](https://github.com/user-attachments/assets/8fc3ecfb-f9ba-4ec1-b0bb-b7cc6a14fb65)
+## Anti-Clockwise Rotation 
 
-![image](https://github.com/user-attachments/assets/5af03fa4-ee3c-44c4-8b53-91da02621608)
+![image](https://github.com/user-attachments/assets/5193f816-149e-49d7-818c-26be79a9be0c)
+
 
 # FreeRTOS
 
@@ -34,6 +41,12 @@ Tried to do this manually with Rising/Falling triggers on A and B. I found I was
 
 # Encoder Option on Timer Input 
 
+## TIM2 Settings
+
+![image](https://github.com/user-attachments/assets/a241932e-1b66-4eea-8b13-7e5b053bddf3)
+
+ENC_A is mapped to PA0 (TIM1) with pull-down enabled 
+ENC_B is mapped to PA1 (TIM2) with pull-down enabled 
 
 
 # Encoder wiring 
@@ -47,6 +60,17 @@ red on yellow - Z (index)
 red on greay - Hall A
 black on yellow - Hall B
 block on gray - Hall C
+
+# From the Scope 
+
+CH1 Yellow: Enc A
+CH3 Magenta: Enc B
+CH2 Blue: Enc Z (Index)
+
+![TEK0014](https://github.com/user-attachments/assets/b268fd6a-1852-40fa-8ac7-b7fb2fe4e708)
+
+![TEK0015](https://github.com/user-attachments/assets/0563076c-17d1-421c-bfcf-8f172acff74a)
+
 
 # References 
 
