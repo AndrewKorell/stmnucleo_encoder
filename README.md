@@ -48,9 +48,6 @@ Tried to do this manually with Rising/Falling triggers on A and B. I found I was
 ENC_A is mapped to PA0 (TIM1) with pull-down enabled 
 ENC_B is mapped to PA1 (TIM2) with pull-down enabled 
 
-# Add Z Index 
-
-![image](https://github.com/user-attachments/assets/a0cf20b4-8ad5-4417-8f1a-3092a851cbfd)
 
 # Encoder wiring 
 
