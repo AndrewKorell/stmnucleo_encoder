@@ -41,6 +41,10 @@ Tried to do this manually with Rising/Falling triggers on A and B. I found I was
 ENC_A is mapped to PA0 (TIM1) with pull-down enabled 
 ENC_B is mapped to PA1 (TIM2) with pull-down enabled 
 
+# Add Z Index 
+
+![image](https://github.com/user-attachments/assets/36da41dc-9108-47ef-8c01-dadd8a28efa3)
+
 # Encoder wiring 
 
 red on orange - 5V
@@ -52,6 +56,17 @@ red on yellow - Z (index)
 red on greay - Hall A
 black on yellow - Hall B
 block on gray - Hall C
+
+# From the Scope 
+
+CH1 Yellow: Enc A
+CH3 Magenta: Enc B
+CH2 Blue: Enc Z (Index)
+
+![TEK0013](https://github.com/user-attachments/assets/76938b3b-378d-4225-a845-8d27d645a501)
+
+![TEK0015](https://github.com/user-attachments/assets/0563076c-17d1-421c-bfcf-8f172acff74a)
+
 
 # References 
 
