@@ -32,6 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "FreeRtos.h"
+#include "semphr.h"
 #include <stdio.h>
 #include <inttypes.h>
 /* USER CODE END Includes */

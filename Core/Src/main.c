@@ -58,7 +58,7 @@ uint32_t enc_index_offset;
 int32_t enc_counts;
 uint8_t MSG[100];
 
-
+SemaphoreHandle_t xEncZSemaphore;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,7 +130,10 @@ int main(void)
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+  xEncZSemaphore = xSemaphoreCreateMutex();
+
+  configASSERT(xEncZSemaphore != NULL);
+
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -405,12 +408,15 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
 
+
+
 	uint32_t raw_cnt = 0;
 	uint32_t prv_cnt = 0;
 	int32_t delta = 0;
 	//uint32_t tracking[10];
 	int32_t full_cnt = 0;
 	uint8_t p_cnt = 0;
+	uint32_t buffered_offset = 0;
 
   for(;;)
   {
@@ -427,12 +433,19 @@ void StartDefaultTask(void *argument)
 
 	  if(p_cnt++ > 10)
 	  {
-	      sprintf((char *) MSG, "Encoder Raw Counts = %lu, Index Offset = %lu, Encoder Tracking = %ld\r\n", (long) raw_cnt, (long) enc_index_offset, (long) full_cnt);
+		  if(xSemaphoreTake(xEncZSemaphore, (TickType_t) 1) == pdTRUE)
+		  {
+			  buffered_offset = enc_index_offset;
+			  xSemaphoreGive(xEncZSemaphore);
+		  }
+	      sprintf((char *) MSG, "Encoder Raw Counts = %lu, Index Offset = %lu, Encoder Tracking = %ld\r\n", (long) raw_cnt, (long) buffered_offset, (long) full_cnt);
 	      HAL_UART_Transmit(&huart2, MSG, sizeof(MSG), 100);
 	      p_cnt = 0;
 	  }
 	  prv_cnt = raw_cnt;
-      osDelay(10);
+      osDelay(10);  //not setting to 1s because that would be way to slow for catching the zero crossing
+
+      // eventually I would put the communications in a separete task but I prefer having everything in this short code block.
   }
 
   /* USER CODE END 5 */
